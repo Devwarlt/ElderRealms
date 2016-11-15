@@ -12,7 +12,7 @@
    <StunImmune/>
    <Quest/>
    <Level>20</Level>
-   <StasisImmune/>
+   <CurseImmune/>
    <XpMult>0.2</XpMult> 
    <AltTexture id = "1" >
      < Texture >
