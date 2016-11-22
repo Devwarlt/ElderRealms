@@ -1,0 +1,54 @@
+Dunno how but make this static. or it will only let players in for a short time. 
+
+// Name this file Elderrealm.cs
+namespace wServer.realm.worlds
+{
+    public class Elderrealm : World
+    {
+        public const string ELDERREALM = "wServer.realm.worlds.maps.Elderrealm.jm";
+
+        public Elderrealm()
+        {
+            Name = "Elderrealm";
+            ClientWorldName = "server.Elderrealm";
+            Background = 2;
+            AllowTeleport = true;
+            Difficulty = 5;
+        }
+
+        protected override void Init()
+        {
+            LoadMap("wServer.realm.worlds.maps.Elderrealm.jm", MapType.Json);
+        }
+    }
+}
+
+
+// the key does not work. put the portal in the nexus. you can do this in the map editor
+
+  <Object type="0x9014" id="Elderrealm Key">
+    <Class>Equipment</Class>
+    <Item/>
+    <Texture>
+      <File>????</File>
+      <Index>????</Index>
+    </Texture>
+    <SlotType>10</SlotType>
+    <Description>A key that opens a portal to the Elder Realms. a long and forgotten place where only memories of fallen soldiers exist now. make sure you are fully prepared. </Description>
+    <Sound>use_key</Sound>
+    <Consumable/>
+    <Soulbound/>
+    <Activate id="Elderrealm Portal">Create</Activate>
+    <feedPower>1000</feedPower>
+    <DisplayId>Elder Key</DisplayId>
+  </Object>
+  <Object type="0x9015" id="Elder Realm Portal">
+    <Class>Portal</Class>
+    <IntergamePortal/>
+    <DungeonName>Elderrealm</DungeonName>
+    <Texture>
+      <File>????</File>
+      <Index>????</Index>
+    </Texture>
+    <DisplayId>Elder Realm Portal</DisplayId>
+  </Object>
