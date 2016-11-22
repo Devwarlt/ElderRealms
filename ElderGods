@@ -1,2 +1,852 @@
-#Elder Gods 
-i have custom elder gods code. il post soon
+These where made in Fsod. 
+Put these in BehaviorDb.Elderrealm.cs 
+you need to make that file
+
+
+#region
+
+using wServer.logic.behaviors;
+using wServer.logic.loot;
+using wServer.logic.transitions;
+
+#endregion
+
+namespace wServer.logic
+{
+    partial class BehaviorDb
+    {
+        private _ Elderrealm = () => Behav()
+            .Init("EWhite Demon",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(10, 3, 20, predictive: 1, coolDown: 500)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Attack", 0.03),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("ESprite God",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, projectileIndex: 0, count: 4, shootAngle: 10),
+                    new Shoot(10, projectileIndex: 1, predictive: 1),
+                    new Spawn("Sprite Child", maxChildren: 5)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(4, ItemType.Ring, 0.02),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Attack", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("ESprite Child",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Protect(0.4, "Sprite God", protectionRange: 1),
+                        new Wander(0.4)
+                        ),
+                    new DropPortalOnDeath("Glowing Portal", 20)
+                    )
+            )
+            .Init("EMedusa",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, 5, 10, coolDown: 1000),
+                    new Grenade(4, 150, 8, coolDown: 3000)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Speed", 0.06),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("EEnt God",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, 5, 10, predictive: 1, coolDown: 1250)
+
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Defense", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("EBeholder",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, projectileIndex: 0, count: 5, shootAngle: 72, predictive: 0.5, coolDown: 750),
+                    new Shoot(10, projectileIndex: 1, predictive: 1)
+
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Defense", 0.06),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("EFlying Brain",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, 5, 72, coolDown: 500)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Attack", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("ESlime God",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, projectileIndex: 0, count: 5, shootAngle: 10, predictive: 1, coolDown: 1000),
+                    new Shoot(10, projectileIndex: 1, predictive: 1, coolDown: 650),
+                    new DropPortalOnDeath("Gauntlet Portal", 5)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(8, ItemType.Weapon, 0.01),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(9, ItemType.Armor, 0.01),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Defense", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("EGhost God",
+                new State(
+                    new Prioritize(
+                        new StayAbove(1, 200),
+                        new Follow(1, range: 7),
+                        new Wander(0.4)
+                        ),
+                    new Shoot(12, 7, 25, predictive: 0.5, coolDown: 900)
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Speed", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("ERock Bot",
+                new State(
+                    new Spawn("Paper Bot", 1, 1, 10000),
+                    new Spawn("Steel Bot", 1, 1, 10000),
+                    new Swirl(0.6, 3, targeted: false),
+                    new State("Waiting",
+                        new PlayerWithinTransition(15, "Attacking")
+                        ),
+                    new State("Attacking",
+                        new Shoot(8, coolDown: 2000),
+                        new Heal(8, "Papers", 1000),
+                        new Taunt(0.5, "We are impervious to non-mystic attacks!"),
+                        new TimedTransition(10000, "Waiting")
+                        )
+                    ),
+                new TierLoot(5, ItemType.Weapon, 0.16),
+                new TierLoot(6, ItemType.Weapon, 0.08),
+                new TierLoot(7, ItemType.Weapon, 0.04),
+                new TierLoot(5, ItemType.Armor, 0.16),
+                new TierLoot(6, ItemType.Armor, 0.08),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(3, ItemType.Ring, 0.05),
+                new TierLoot(3, ItemType.Ability, 0.1),
+                new ItemLoot("Purple Drake Egg", 0.01)
+            )
+            .Init("EPaper Bot",
+                new State(
+                    new Prioritize(
+                        new Orbit(0.4, 3, target: "Rock Bot"),
+                        new Wander(0.8)
+                        ),
+                    new State("Idle",
+                        new PlayerWithinTransition(15, "Attack")
+                        ),
+                    new State("Attack",
+                        new Shoot(8, 3, 20, coolDown: 800),
+                        new Heal(8, "Steels", 1000),
+                        new NoPlayerWithinTransition(30, "Idle"),
+                        new HpLessTransition(0.2, "Explode")
+                        ),
+                    new State("Explode",
+                        new Shoot(0, 10, 36, fixedAngle: 0),
+                        new Decay(0)
+                        )
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.01),
+                new ItemLoot("Health Potion", 0.04),
+                new ItemLoot("Magic Potion", 0.01),
+                new ItemLoot("Tincture of Life", 0.01)
+            )
+            .Init("ESteel Bot",
+                new State(
+                    new Prioritize(
+                        new Orbit(0.4, 3, target: "Rock Bot"),
+                        new Wander(0.8)
+                        ),
+                    new State("Idle",
+                        new PlayerWithinTransition(15, "Attack")
+                        ),
+                    new State("Attack",
+                        new Shoot(8, 3, 20, coolDown: 800),
+                        new Heal(8, "Rocks", 1000),
+                        new Taunt(0.5, "Silly squishy. We heal our brothers in a circle."),
+                        new NoPlayerWithinTransition(30, "Idle"),
+                        new HpLessTransition(0.2, "Explode")
+                        ),
+                    new State("Explode",
+                        new Shoot(0, 10, 36, fixedAngle: 0),
+                        new Decay(0)
+                        )
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.01),
+                new ItemLoot("Health Potion", 0.04),
+                new ItemLoot("Magic Potion", 0.01)
+            )
+            .Init("EDjinn",
+                new State(
+                    new State("Idle",
+                        new Prioritize(
+                            new StayAbove(1, 200),
+                            new Wander(0.8)
+                            ),
+                        new ConditionalEffect(ConditionEffectIndex.Invulnerable),
+                        new PlayerWithinTransition(8, "Attacking")
+                        ),
+                    new State("Attacking",
+                        new State("Bullet",
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 90, coolDownOffset: 0, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 100, coolDownOffset: 200, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 110, coolDownOffset: 400, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 120, coolDownOffset: 600, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 130, coolDownOffset: 800, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 140, coolDownOffset: 1000, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 150, coolDownOffset: 1200, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 160, coolDownOffset: 1400, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 170, coolDownOffset: 1600, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 180, coolDownOffset: 1800, shootAngle: 90),
+                            new Shoot(1, 8, coolDown: 10000, fixedAngle: 180, coolDownOffset: 2000, shootAngle: 45),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 180, coolDownOffset: 0, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 170, coolDownOffset: 200, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 160, coolDownOffset: 400, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 150, coolDownOffset: 600, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 140, coolDownOffset: 800, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 130, coolDownOffset: 1000, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 120, coolDownOffset: 1200, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 110, coolDownOffset: 1400, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 100, coolDownOffset: 1600, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 90, coolDownOffset: 1800, shootAngle: 90),
+                            new Shoot(1, 4, coolDown: 10000, fixedAngle: 90, coolDownOffset: 2000, shootAngle: 22.5),
+                            new TimedTransition(2000, "Wait")
+                            ),
+                        new State("Wait",
+                            new Follow(0.7, range: 0.5),
+                            new Flash(0xff00ff00, 0.1, 20),
+                            new ConditionalEffect(ConditionEffectIndex.Invulnerable),
+                            new TimedTransition(2000, "Bullet")
+                            ),
+                        new NoPlayerWithinTransition(13, "Idle"),
+                        new HpLessTransition(0.5, "FlashBeforeExplode")
+                        ),
+                    new State("FlashBeforeExplode",
+                        new ConditionalEffect(ConditionEffectIndex.Invulnerable),
+                        new Flash(0xff0000, 0.3, 3),
+                        new TimedTransition(1000, "Explode")
+                        ),
+                    new State("Explode",
+                        new Shoot(0, 10, 36, fixedAngle: 0),
+                        new Suicide()
+                        )
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.04),
+                new TierLoot(7, ItemType.Weapon, 0.02),
+                new TierLoot(7, ItemType.Armor, 0.04),
+                new TierLoot(8, ItemType.Armor, 0.02),
+                new TierLoot(3, ItemType.Ring, 0.015),
+                new TierLoot(4, ItemType.Ring, 0.005),
+                new TierLoot(4, ItemType.Ability, 0.02),
+                new Threshold(0.18,
+                    new ItemLoot("Potion of Speed", 0.025),
+                    new EggLoot(EggRarity.Common, 0.1),
+                    new EggLoot(EggRarity.Uncommon, 0.05)
+                    )
+            )
+            .Init("ELeviathan",
+                new State(
+                    new State("pattern walk",
+                        new StayAbove(2, 200),
+                        new Sequence(
+                            new Timed(2000,
+                                new Prioritize(
+                                    new StayBack(1, distance: 8),
+                                    new BackAndForth(1)
+                                    )),
+                            new Timed(2000,
+                                new Prioritize(
+                                    new Orbit(1, 8, 11),
+                                    new Swirl(1, 4, targeted: false)
+                                    )),
+                            new Timed(1000,
+                                new Prioritize(
+                                    new Follow(1, 11, 1),
+                                    new StayCloseToSpawn(1, 1)
+                                    )
+                                )
+                            ),
+                        new State("1",
+                            new Shoot(0, 3, 10, fixedAngle: 0, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 3, 10, fixedAngle: 120, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 3, 10, fixedAngle: 240, projectileIndex: 0, coolDown: 300),
+                            new TimedTransition(1500, "2")
+                            ),
+                        new State("2",
+                            new Shoot(0, 4, 10, fixedAngle: 40, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 4, 10, fixedAngle: 160, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 4, 10, fixedAngle: 280, projectileIndex: 0, coolDown: 300),
+                            new TimedTransition(1500, "3")
+                            ),
+                        new State("3",
+                            new Shoot(0, 4, 10, fixedAngle: 80, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 4, 10, fixedAngle: 200, projectileIndex: 0, coolDown: 300),
+                            new Shoot(0, 4, 10, fixedAngle: 320, projectileIndex: 0, coolDown: 300),
+                            new TimedTransition(1500, "1")
+                            ),
+                        new TimedTransition(4400, "follow")
+                        ),
+                    new State("follow",
+                        new Prioritize(
+                            new StayAbove(1, 200),
+                            new Orbit(1, 4, 11),
+                            new Wander(1)
+                            ),
+                        new Shoot(11, 2, 15, defaultAngle: 0, angleOffset: 0, projectileIndex: 1, predictive: 1,
+                            coolDown: 900, coolDownOffset: 0),
+                        new Shoot(11, 2, 15, defaultAngle: 0, angleOffset: -10, projectileIndex: 1, predictive: 1,
+                            coolDown: 900, coolDownOffset: 300),
+                        new Shoot(11, 2, 15, defaultAngle: 0, angleOffset: 10, projectileIndex: 1, predictive: 1,
+                            coolDown: 900, coolDownOffset: 600),
+                        new TimedTransition(4500, "pattern walk")
+                        )
+                    ),
+                new TierLoot(6, ItemType.Weapon, 0.01),
+                new ItemLoot("Health Potion", 0.04),
+                new ItemLoot("Magic Potion", 0.01)
+            )
+            ;
+    }
+}
+
+
+
+/// change the textures if you want custom ones. the textures will default to normal gods. medusa, slime god etc
+
+  <Object type="0x9000" id="EWhite Demon">
+    <Group>Greater Demons</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x00</Index>
+    </AnimatedTexture>
+    <HitSound>monster/greater_demons_hit</HitSound>
+    <DeathSound>monster/greater_demons_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>3000</MaxHitPoints>
+    <Defense>35</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>2</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>4</Max>
+    </Spawn>
+    <PerRealmMax>2000</PerRealmMax>
+    <Flying/>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>White Star Stunner</ObjectId>
+      <Damage>70</Damage>
+      <Speed>50</Speed>
+      <LifetimeMS>2000</LifetimeMS>
+      <Size>60</Size>
+      <ArmorPiercing/>
+      <MultiHit/>
+    </Projectile>
+    <DisplayId>{mountains.White_Demon}</DisplayId>
+  </Object>
+  <Object type="0x9001" id="ESprite God">
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x01</Index>
+    </AnimatedTexture>
+    <HitSound>monster/sprite_god_hit</HitSound>
+    <DeathSound>monster/sprite_god_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>4500</MaxHitPoints>
+    <Defense>35</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Flying/>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Pink Swipe</ObjectId>
+      <Damage>120</Damage>
+      <Speed>70</Speed>
+      <LifetimeMS>2000</LifetimeMS>
+    </Projectile>
+    <Projectile id="1">
+      <ObjectId>Grey Boomerang</ObjectId>
+      <Damage>15</Damage>
+      <Speed>60</Speed>
+      <LifetimeMS>2400</LifetimeMS>
+      <ConditionEffect duration="20">Quiet</ConditionEffect>
+      <MultiHit/>
+      <ParticleTrail/>
+    </Projectile>
+    <DisplayId>{mountains.Sprite_God}</DisplayId>
+  </Object>
+  <Object type="0x9002" id="ESprite Child">
+    <Enemy/>
+    <Class>Character</Class>
+    <Texture>
+      <File>lofiChar8x8</File>
+      <Index>0x9b</Index>
+    </Texture>
+    <HitSound>monster/sprites_hit</HitSound>
+    <DeathSound>monster/sprites_death</DeathSound>
+    <Size>75</Size>
+    <MaxHitPoints>500</MaxHitPoints>
+    <Defense>100</Defense>
+    <Terrain>Mountains</Terrain>
+    <Flying/>
+    <DisplayId>{mountains.Sprite_Child}</DisplayId>
+  </Object>
+  <Object type="0x9003" id="EMedusa">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x02</Index>
+    </AnimatedTexture>
+    <HitSound>monster/medusa_hit</HitSound>
+    <DeathSound>monster/medusa_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>5000</MaxHitPoints>
+    <Defense>40</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>5</Max>
+    </Spawn>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Green Spinner</ObjectId>
+      <Damage>120</Damage>
+      <Speed>70</Speed>
+      <LifetimeMS>2000</LifetimeMS>
+    </Projectile>
+    <DisplayId>{mountains.Medusa}</DisplayId>
+  </Object>
+  <Object type="0x9004" id="EEnt God">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x04</Index>
+    </AnimatedTexture>
+    <HitSound>monster/ents_hit</HitSound>
+    <DeathSound>monster/ents_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>3500</MaxHitPoints>
+    <Defense>35</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>5</Max>
+    </Spawn>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Brown Claw</ObjectId>
+      <Damage>120</Damage>
+      <Speed>70</Speed>
+      <LifetimeMS>2000</LifetimeMS>
+      <MultiHit/>
+    </Projectile>
+    <DisplayId>{mountains.Ent_God}</DisplayId>
+  </Object>
+  <Object type="0x9005" id="EBeholder">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x05</Index>
+    </AnimatedTexture>
+    <HitSound>monster/beholder_hit</HitSound>
+    <DeathSound>monster/beholder_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>7000</MaxHitPoints>
+    <Defense>50</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>7</Max>
+    </Spawn>
+    <Flying/>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>White Flame</ObjectId>
+      <Damage>150</Damage>
+      <Speed>50</Speed>
+      <LifetimeMS>3000</LifetimeMS>
+      <Size>120</Size>
+    </Projectile>
+    <Projectile id="1">
+      <ObjectId>Purple Star</ObjectId>
+      <Damage>0</Damage>
+      <Speed>70</Speed>
+      <LifetimeMS>3000</LifetimeMS>
+      <ConditionEffect duration="5">Blind</ConditionEffect>
+    </Projectile>
+    <DisplayId>{mountains.Beholder}</DisplayId>
+  </Object>
+  <Object type="0x9006" id="EFlying Brain">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x06</Index>
+    </AnimatedTexture>
+    <HitSound>monster/flying_brain_hit</HitSound>
+    <DeathSound>monster/flying_brain_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>2000</MaxHitPoints>
+    <Defense>15</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>5</Max>
+    </Spawn>
+    <Flying/>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Pink Blast</ObjectId>
+      <Damage>80</Damage>
+      <Speed>120</Speed>
+      <LifetimeMS>1800</LifetimeMS>
+    </Projectile>
+    <DisplayId>{mountains.Flying_Brain}</DisplayId>
+  </Object>
+  <Object type="0x9007" id="ESlime God">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x07</Index>
+    </AnimatedTexture>
+    <HitSound>monster/slimes_hit</HitSound>
+    <DeathSound>monster/slimes_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>4000</MaxHitPoints>
+    <Defense>75</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Mute Spell</ObjectId>
+      <Damage>100</Damage>
+      <Speed>90</Speed>
+      <LifetimeMS>1100</LifetimeMS>
+    </Projectile>
+    <Projectile id="1">
+      <ObjectId>Green Bolt</ObjectId>
+      <Damage>10</Damage>
+      <Speed>70</Speed>
+      <LifetimeMS>2000</LifetimeMS>
+      <ConditionEffect duration="11">Slowed</ConditionEffect>
+    </Projectile>
+    <DisplayId>{mountains.Slime_God}</DisplayId>
+  </Object>
+  <Object type="0x9008" id="EGhost God">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains2</File>
+      <Index>0</Index>
+    </AnimatedTexture>
+    <HitSound>monster/ghost_god_hit</HitSound>
+    <DeathSound>monster/ghost_god_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>2000</MaxHitPoints>
+    <Defense>10</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>1.0</SpawnProb>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>5</Max>
+    </Spawn>
+    <Flying/>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>White Flame</ObjectId>
+      <Damage>180</Damage>
+      <Speed>50</Speed>
+      <LifetimeMS>4000</LifetimeMS>
+      <Size>110</Size>
+    </Projectile>
+    <DisplayId>{mountains.Ghost_God}</DisplayId>
+  </Object>
+  <Object type="0x9009" id="ERock Bot">
+    <Group>Rocks</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <DisplayId>{mountains.Rock_Bot}</DisplayId>
+    <Texture>
+      <File>lofiChar216x16</File>
+      <Index>0x24</Index>
+    </Texture>
+    <HitSound>monster/stone_walls_hit</HitSound>
+    <DeathSound>monster/stone_walls_death</DeathSound>
+    <Projectile id="0">
+      <ObjectId>White Bullet</ObjectId>
+      <Speed>70</Speed>
+      <Damage>80</Damage>
+      <Size>80</Size>
+      <LifetimeMS>2000</LifetimeMS>
+      <MultiHit/>
+    </Projectile>
+    <MaxHitPoints>2000</MaxHitPoints>
+    <Size>70</Size>
+    <Defense>20</Defense>
+    <XpMult>2.0</XpMult>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>0.3</SpawnProb>
+    <God/>
+  </Object>
+  <Object type="0x9010" id="EPaper Bot">
+    <Group>Papers</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <DisplayId>{mountains.Paper_Bot}</DisplayId>
+    <Texture>
+      <File>lofiChar216x16</File>
+      <Index>0x25</Index>
+    </Texture>
+    <HitSound>monster/wooden_walls_hit</HitSound>
+    <DeathSound>monster/wooden_walls_death</DeathSound>
+    <Projectile id="0">
+      <ObjectId>White Bullet</ObjectId>
+      <Speed>30</Speed>
+      <Damage>50</Damage>
+      <Size>50</Size>
+      <LifetimeMS>4000</LifetimeMS>
+      <MultiHit/>
+    </Projectile>
+    <MaxHitPoints>2000</MaxHitPoints>
+    <Size>70</Size>
+    <Defense>20</Defense>
+    <XpMult>0.0</XpMult>
+    <Terrain>Mountains</Terrain>
+  </Object>
+  <Object type="0x9011" id="ESteel Bot">
+    <Group>Steels</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <DisplayId>{mountains.Steel_Bot}</DisplayId>
+    <Texture>
+      <File>lofiChar216x16</File>
+      <Index>0x26</Index>
+    </Texture>
+    <HitSound>monster/rocks_hit</HitSound>
+    <DeathSound>monster/rocks_death</DeathSound>
+    <Projectile id="0">
+      <ObjectId>White Bullet</ObjectId>
+      <Speed>30</Speed>
+      <Damage>50</Damage>
+      <Size>50</Size>
+      <LifetimeMS>4000</LifetimeMS>
+      <MultiHit/>
+    </Projectile>
+    <MaxHitPoints>2000</MaxHitPoints>
+    <Size>70</Size>
+    <Defense>20</Defense>
+    <XpMult>0.0</XpMult>
+    <Terrain>Mountains</Terrain>
+  </Object>
+  <Object type="0x9012" id="EDjinn">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains1</File>
+      <Index>0x03</Index>
+    </AnimatedTexture>
+    <HitSound>monster/djinn_hit</HitSound>
+    <DeathSound>monster/djinn_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>1000</MaxHitPoints>
+    <Defense>12</Defense>
+    <Terrain>Mountains</Terrain>
+    <Spawn>
+      <Mean>3</Mean>
+      <StdDev>1</StdDev>
+      <Min>2</Min>
+      <Max>5</Max>
+    </Spawn>
+    <Flying/>
+    <God/>
+    <SpawnProb>0.75</SpawnProb>
+    <Projectile id="0">
+      <ObjectId>Moon Shot</ObjectId>
+      <Damage>90</Damage>
+      <Speed>60</Speed>
+      <Size>60</Size>
+      <LifetimeMS>1500</LifetimeMS>
+      <MultiHit/>
+    </Projectile>
+    <DisplayId>{mountains.Djinn}</DisplayId>
+  </Object>
+  <Object type="0x9013" id="ELeviathan">
+    <Group>Gods</Group>
+    <Enemy/>
+    <Class>Character</Class>
+    <AnimatedTexture>
+      <File>chars16x16dMountains2</File>
+      <Index>1</Index>
+    </AnimatedTexture>
+    <HitSound>monster/greater_pit_snakes_hit</HitSound>
+    <DeathSound>monster/medusa_death</DeathSound>
+    <Size>100</Size>
+    <MaxHitPoints>3500</MaxHitPoints>
+    <Defense>0</Defense>
+    <Terrain>Mountains</Terrain>
+    <SpawnProb>0.55</SpawnProb>
+    <God/>
+    <Projectile id="0">
+      <ObjectId>Sea Arrow</ObjectId>
+      <Damage>70</Damage>
+      <Speed>67</Speed>
+      <LifetimeMS>1700</LifetimeMS>
+    </Projectile>
+    <Projectile id="1">
+      <ObjectId>Blue Missile</ObjectId>
+      <Damage>90</Damage>
+      <Speed>85</Speed>
+      <LifetimeMS>1800</LifetimeMS>
+    </Projectile>
+    <DisplayId>{mountains.Leviathan}</DisplayId>
+  </Object>
+
+
+
+
+
+
